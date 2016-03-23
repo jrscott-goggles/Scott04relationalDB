@@ -1,11 +1,12 @@
 import sqlite3
  
 DB_FILENAME = 'songs.sqlite3.db'
-SQL_SELECT_GENRES = 'SELECT name FROM genres'
+SQL_SELECT_GENRES = 'SELECT id, name FROM genres'
 SQL_INSERT_GENRE = 'INSERT INTO genres(name) VALUES(?);'
-SQL_SELECT_ALBUMS = 'SELECT albums.name, artists.name FROM albums,artists WHERE artists.id  = albums.artist_id'
+SQL_SELECT_ALBUMS = 'SELECT albums.id, albums.name, artists.name FROM albums,artists WHERE artists.id  = albums.artist_id'
 SQL_INSERT_ALBUM = 'INSERT INTO albums(name, artist_id) VALUES(?,?);'
 SQL_SELECT_ARTISTS = 'SELECT id, name FROM artists'
+SQL_INSERT_ARTIST = 'INSERT INTO artists(name) VALUES(?)'
 
 def main_menu():
 	print('Welcome to the music database!')
@@ -38,7 +39,7 @@ def add_genre():
 	#prints genres
 	print('Genres in the database:')
 	for row in cursor.execute(SQL_SELECT_GENRES):
-		print('%s' % row)
+		print('%d. %s' % (int(row[0]), row[1]))
 	new_genre = str(raw_input('Enter new genre name or leave blank to exit to menu:'))
 	#if something was entered, add it as a genre
 	if (len(new_genre) != 0): cursor.execute(SQL_INSERT_GENRE,(new_genre,))
@@ -49,7 +50,7 @@ def add_album():
 	#prints albums
 	print('Albums in the database:')
 	for row in cursor.execute(SQL_SELECT_ALBUMS):
-		print('Album: %s. Artist: %s' % (row[0], row[1]))
+		print('%d. Album: %s. Artist: %s' % (int(row[0]), row[1], row[2]))
 	new_album = str(raw_input('Enter new album name or leave blank to exit to menu: '))
 	if (len(new_album) != 0):
 		for row in cursor.execute(SQL_SELECT_ARTISTS):
@@ -60,8 +61,10 @@ def add_album():
 	main_menu()
 	
 def add_artist():
-	#show and add an artists
-	print('the artists')
+	for row in cursor.execute(SQL_SELECT_ARTISTS):
+		print('%d. %s' %(int(row[0]), row[1]))
+	new_artist = str(raw_input('Enter new artist name or leave blank to exit to menu: '))
+	if (len(new_artist) != 0): cursor.execute(SQL_INSERT_ARTIST, (new_artist,))
 	main_menu()
 
 def add_song():
