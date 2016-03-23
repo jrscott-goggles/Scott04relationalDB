@@ -41,7 +41,7 @@ def add_genre():
 	print('Genres in the database:')
 	for row in cursor.execute(SQL_SELECT_GENRES):
 		print('%d. %s' % (int(row[0]), row[1]))
-	new_genre = str(raw_input('Enter new genre name or stay blank to exit to menu:'))
+	new_genre = str(raw_input('Enter new genre name or leave blank to exit to menu:'))
 	#if something was entered, add it as a genre
 	if (len(new_genre) != 0): cursor.execute(SQL_INSERT_GENRE,(new_genre,))
 
@@ -50,14 +50,14 @@ def add_album():
 	print('Albums in the database:')
 	for row in cursor.execute(SQL_SELECT_ALBUMS):
 		print('%d. Album: %s. Artist: %s' % (int(row[0]), row[1], row[2]))
-	new_album = str(raw_input('Enter new album name or stay blank to exit to menu: '))
+	new_album = str(raw_input('Enter new album name or leave blank to exit to menu: '))
 	if (len(new_album) != 0):
 		artist_id_list = []
 		for row in cursor.execute(SQL_SELECT_ARTISTS):
 			print('%d. %s' %(int(row[0]), row[1]))
 			artist_id_list.append(int(row[0]))
 		
-		artist_id = raw_input('Enter the number of the artist for this album or stay blank to exit to menu: ')
+		artist_id = raw_input('Enter the number of the artist for this album or leave blank to exit to menu: ')
 		try:
 			artist_id = int(artist_id)
 			if(artist_id in artist_id_list): cursor.execute(SQL_INSERT_ALBUM,(new_album, artist_id,))
@@ -68,7 +68,7 @@ def add_album():
 def add_artist():
 	for row in cursor.execute(SQL_SELECT_ARTISTS):
 		print('%d. %s' %(int(row[0]), row[1]))
-	new_artist = str(raw_input('Enter new artist name or stay blank to exit to menu: '))
+	new_artist = str(raw_input('Enter new artist name or leave blank to exit to menu: '))
 	if (len(new_artist) != 0): cursor.execute(SQL_INSERT_ARTIST, (new_artist,))
 
 def add_song():
