@@ -20,7 +20,7 @@ def main_menu():
 		elif (choice == 3): add_album();
 		elif (choice == 4): add_artist();
 		elif (choice == 5): add_song();
-		elif(choice ==6): print("Goodbye.  Thanks for coming.")
+		elif(choice ==6): exit_program();
 		else: invalid_input()
 	except ValueError:
 		invalid_input()
@@ -60,6 +60,17 @@ def add_song():
 def invalid_input():
 	print("Invalid input.  Please try again")
 	main_menu()
+	
+def exit_program():
+	choice = raw_input("Would you like to save changes to the database? (y/n):")
+	if (choice.lower() == 'y'):
+		db_connection.commit()
+		print("Changes saved.\nGoodbye.  Thanks for coming.")
+	elif (choice.lower() == 'n'):
+		print("Changes not saved.\nGoodbye.  Thanks for coming.")
+	else:
+		print("Invalid input.  Please try again")
+		exit_program()
 	
 	
 #connects to the db
