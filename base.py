@@ -61,9 +61,9 @@ def add_album():
 		try:
 			artist_id = int(artist_id)
 			if(artist_id in artist_id_list): cursor.execute(SQL_INSERT_ALBUM,(new_album, artist_id,))
-			elif(len(artist_id) != 0): invalid_input()
+			else: invalid_input()
 		except ValueError:
-			if(len(str(artist_id)) != 0): invalid_input()
+			invalid_input()
 
 def add_artist():
 	for row in cursor.execute(SQL_SELECT_ARTISTS):
@@ -72,8 +72,8 @@ def add_artist():
 	if (len(new_artist) != 0): cursor.execute(SQL_INSERT_ARTIST, (new_artist,))
 
 def add_song():
-	#show and add a songs
-	print('the songs')
+	#Add a songs
+	print('Add a new song!')
 	
 def invalid_input():
 	print('Invalid input.  Please try again')
