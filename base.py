@@ -13,7 +13,7 @@ SQL_INSERT_SONG = 'INSERT INTO songs(name, genre_id, album_id) VALUES(?,?,?);'
 stay = True
 
 def main_menu():
-	print('Welcome to the music database!')
+	print('------------------------------\nWelcome to the music database!')
 	print('\t1. Display all song information.')
 	print('\t2. Add a new genere.')
 	print('\t3. Add a new album.')
@@ -35,13 +35,13 @@ def main_menu():
 	
 def display_songs():
 	#display and add songs
-	print('Look at all this nice music:')
+	print('------------------------------\nLook at all this nice music:')
 	for row in cursor.execute(SQL_SELECT_SONGS):
 		print('%s\t%s\t%s\t%s\t' %(row[0], row[1], row[2], row[3]))
 
 def add_genre():
 	#prints genres
-	print('Genres in the database:')
+	print('------------------------------\nGenres in the database:')
 	for row in cursor.execute(SQL_SELECT_GENRES):
 		print('%d. %s' % (int(row[0]), row[1]))
 	new_genre = str(raw_input('Enter new genre name or leave blank to exit to menu:'))
@@ -50,7 +50,7 @@ def add_genre():
 
 def add_album():
 	#prints albums
-	print('Albums in the database:')
+	print('------------------------------\nAlbums in the database:')
 	for row in cursor.execute(SQL_SELECT_ALBUMS):
 		print('%d. Album: %s. Artist: %s' % (int(row[0]), row[1], row[2]))
 	new_album = str(raw_input('Enter new album name or leave blank to exit to menu: '))
@@ -69,6 +69,7 @@ def add_album():
 			if(len(str(artist_id)) != 0): invalid_input()
 
 def add_artist():
+	print("------------------------------\nArtists in the database:")
 	for row in cursor.execute(SQL_SELECT_ARTISTS):
 		print('%d. %s' %(int(row[0]), row[1]))
 	new_artist = str(raw_input('Enter new artist name or leave blank to exit to menu: '))
@@ -76,7 +77,7 @@ def add_artist():
 
 def add_song():
 	#Add a songs
-	print('Add a new song!')
+	print('------------------------------\nAdd a new song!')
 	new_song = str(raw_input('Enter new song name or leave blank to exit to menu: '))
 	if (len(new_song) != 0):
 		genre_id_list = []
@@ -106,7 +107,7 @@ def add_song():
 	
 	
 def invalid_input():
-	print('Invalid input.  Please try again.\n')
+	print('Invalid input.  Please try again.')
 	
 def exit_program():
 	global stay
