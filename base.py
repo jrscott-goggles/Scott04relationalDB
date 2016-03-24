@@ -77,11 +77,36 @@ def add_artist():
 def add_song():
 	#Add a songs
 	print('Add a new song!')
+	new_song = str(raw_input('Enter new song name or leave blank to exit to menu: '))
+	if (len(new_song) != 0):
+		genre_id_list = []
+		for row in cursor.execute(SQL_SELECT_GENRES):
+			print('%d. %s' % (int(row[0]), row[1]))
+			genre_id_list.append(int(row[0]))
+		genre_id = raw_input('Enter genre number or leave blank to exit to menu: ')
+		try:
+			genre_id = int(genre_id)
+			if(genre_id in genre_id_list):
+				#keep going with album then insert it
+				album_id_list = []
+				for row in cursor.execute(SQL_SELECT_ALBUMS):
+					print('%d. %s' % (int(row[0]), row[1]))
+					album_id_list.append(int(row[0]))
+				album_id = raw_input('Enter album number or leave blank to exit to menu: ')
+				try:
+					album_id = int(album_id)
+					if(album_id in album_id_list): cursor.execute(SQL_INSERT_SONG, (new_song, genre_id, album_id,))
+					else: invalid_input()
+				except ValueError:
+					if(len(str(album_id)) != 0): invalid_input()
+			else: invalid_input()
+		except ValueError:
+			if(len(str(genre_id)) != 0): invalid_input()
 	
 	
 	
 def invalid_input():
-	print('Invalid input.  Please try again')
+	print('Invalid input.  Please try again.\n')
 	
 def exit_program():
 	global stay
