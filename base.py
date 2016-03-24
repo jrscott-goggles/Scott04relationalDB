@@ -7,6 +7,7 @@ SQL_SELECT_ALBUMS = 'SELECT albums.id, albums.name, artists.name FROM albums,art
 SQL_INSERT_ALBUM = 'INSERT INTO albums(name, artist_id) VALUES(?,?);'
 SQL_SELECT_ARTISTS = 'SELECT id, name FROM artists'
 SQL_INSERT_ARTIST = 'INSERT INTO artists(name) VALUES(?)'
+SQL_SELECT_SONGS = 'SELECT songs.name, genres.name, artists.name, albums.name FROM songs, genres, artists, albums WHERE genres.id = songs.genre_id AND artists.id = albums.artist_id AND albums.id = songs.album_id'
 
 stay = True
 
@@ -34,7 +35,9 @@ def main_menu():
 
 def display_songs():
 	#display and add songs
-	print('the songs')
+	print('Look at all this nice music:')
+	for row in cursor.execute(SQL_SELECT_SONGS):
+		print('%s\t%s\t%s\t%s\t' %(row[0], row[1], row[2], row[3]))
 
 def add_genre():
 	#prints genres
