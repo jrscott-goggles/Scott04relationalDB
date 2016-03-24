@@ -8,6 +8,7 @@ SQL_INSERT_ALBUM = 'INSERT INTO albums(name, artist_id) VALUES(?,?);'
 SQL_SELECT_ARTISTS = 'SELECT id, name FROM artists'
 SQL_INSERT_ARTIST = 'INSERT INTO artists(name) VALUES(?)'
 SQL_SELECT_SONGS = 'SELECT songs.name, genres.name, artists.name, albums.name FROM songs, genres, artists, albums WHERE genres.id = songs.genre_id AND artists.id = albums.artist_id AND albums.id = songs.album_id'
+SQL_INSERT_SONG = 'INSERT INTO songs(name, genre_id, album_id) VALUES(?,?,?);'
 
 stay = True
 
@@ -32,7 +33,6 @@ def main_menu():
 	except ValueError:
 		invalid_input()
 	
-
 def display_songs():
 	#display and add songs
 	print('Look at all this nice music:')
@@ -66,7 +66,7 @@ def add_album():
 			if(artist_id in artist_id_list): cursor.execute(SQL_INSERT_ALBUM,(new_album, artist_id,))
 			else: invalid_input()
 		except ValueError:
-			invalid_input()
+			if(len(str(artist_id)) != 0): invalid_input()
 
 def add_artist():
 	for row in cursor.execute(SQL_SELECT_ARTISTS):
@@ -77,6 +77,8 @@ def add_artist():
 def add_song():
 	#Add a songs
 	print('Add a new song!')
+	
+	
 	
 def invalid_input():
 	print('Invalid input.  Please try again')
