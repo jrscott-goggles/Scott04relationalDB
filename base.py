@@ -1,3 +1,7 @@
+#Justin Scott
+#Project 4: Relational Database Management
+#Consle interface for displaying and adding data to a SQLite song database
+
 import sqlite3
  
 DB_FILENAME = 'songs.sqlite3.db'
@@ -34,8 +38,9 @@ def main_menu():
 		invalid_input()
 	
 def display_songs():
-	#display and add songs
+	#align these
 	print('------------------------------\nLook at all this nice music:')
+	print("Song-Genre-Artist-Album")
 	for row in cursor.execute(SQL_SELECT_SONGS):
 		print('%s\t%s\t%s\t%s\t' %(row[0], row[1], row[2], row[3]))
 
@@ -50,9 +55,10 @@ def add_genre():
 
 def add_album():
 	#prints albums
+	#align these
 	print('------------------------------\nAlbums in the database:')
 	for row in cursor.execute(SQL_SELECT_ALBUMS):
-		print('%d. Album: %s. Artist: %s' % (int(row[0]), row[1], row[2]))
+		print('%d. %s by %s' % (int(row[0]), row[1], row[2]))
 	new_album = str(raw_input('Enter new album name or leave blank to exit to menu: '))
 	if (len(new_album) != 0):
 		artist_id_list = []
@@ -81,6 +87,7 @@ def add_song():
 	new_song = str(raw_input('Enter new song name or leave blank to exit to menu: '))
 	if (len(new_song) != 0):
 		genre_id_list = []
+		print("Genres:")
 		for row in cursor.execute(SQL_SELECT_GENRES):
 			print('%d. %s' % (int(row[0]), row[1]))
 			genre_id_list.append(int(row[0]))
@@ -90,6 +97,7 @@ def add_song():
 			if(genre_id in genre_id_list):
 				#keep going with album then insert it
 				album_id_list = []
+				print("Albums:")
 				for row in cursor.execute(SQL_SELECT_ALBUMS):
 					print('%d. %s' % (int(row[0]), row[1]))
 					album_id_list.append(int(row[0]))
@@ -103,9 +111,7 @@ def add_song():
 			else: invalid_input()
 		except ValueError:
 			if(len(str(genre_id)) != 0): invalid_input()
-	
-	
-	
+
 def invalid_input():
 	print('Invalid input.  Please try again.')
 	
